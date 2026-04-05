@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Élite Fit – Academia Premium</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --black: #0A0A0A;
+    --dark: #111111;
+    --card-bg: #161616;
+    --yellow: #F5C400;
+    --yellow-dark: #D4A800;
+    --red: #E63030;
+    --white: #FFFFFF;
+    --gray: #8A8A8A;
+    --gray-light: #D0D0D0;
+    --border: rgba(255,255,255,0.08);
+  }
+
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Barlow', sans-serif; background: var(--black); color: var(--white); overflow-x: hidden; }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 64px; height: 76px;
+    background: rgba(10,10,10,0.95);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem; letter-spacing: 0.08em;
+    color: var(--white);
+  }
+
+  .nav-logo span { color: var(--yellow); }
+
+  .nav-links { display: flex; gap: 36px; list-style: none; align-items: center; }
+  .nav-links a { text-decoration: none; color: var(--gray); font-size: 0.9rem; font-weight: 500; letter-spacing: 0.05em; text-transform: uppercase; transition: color 0.3s; }
+  .nav-links a:hover { color: var(--yellow); }
+
+  .nav-cta {
+    background: var(--yellow); color: var(--black) !important;
+    padding: 10px 28px; font-weight: 600 !important; letter-spacing: 0.08em !important;
+    clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+    transition: background 0.3s !important;
+  }
+
+  .nav-cta:hover { background: var(--yellow-dark) !important; }
+
+  /* HERO */
+  .hero {
+    position: relative; min-height: 100vh;
+    display: flex; align-items: flex-end;
+    padding-top: 76px; overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute; inset: 0;
+  }
+
+  .hero-bg img {
+    width: 100%; height: 100%; object-fit: cover; object-position: center 30%;
+    filter: brightness(0.35) saturate(0.7);
+  }
+
+  .hero-bg::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, var(--black) 20%, transparent 70%),
+                linear-gradient(to right, rgba(10,10,10,0.8) 30%, transparent 70%);
+  }
+
+  .hero-content {
+    position: relative; z-index: 2;
+    padding: 80px 64px;
+    max-width: 860px;
+  }
+
+  .hero-tag {
+    display: inline-flex; align-items: center; gap: 10px;
+    border: 1px solid var(--yellow); color: var(--yellow);
+    font-size: 0.78rem; font-weight: 600; letter-spacing: 0.2em;
+    text-transform: uppercase; padding: 8px 20px; margin-bottom: 32px;
+    opacity: 0; animation: fadeUp 0.7s 0.2s forwards;
+  }
+
+  .hero-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(5rem, 12vw, 13rem);
+    line-height: 0.9; letter-spacing: 0.02em;
+    margin-bottom: 24px;
+    opacity: 0; animation: fadeUp 0.7s 0.35s forwards;
+  }
+
+  .hero-title .line2 { color: var(--yellow); -webkit-text-stroke: 0px; }
+  .hero-title .outline { -webkit-text-stroke: 2px var(--white); color: transparent; }
+
+  .hero-sub {
+    font-size: 1.1rem; color: rgba(255,255,255,0.6); font-weight: 300;
+    line-height: 1.7; max-width: 480px; margin-bottom: 48px;
+    opacity: 0; animation: fadeUp 0.7s 0.5s forwards;
+  }
+
+  .hero-actions {
+    display: flex; gap: 16px; align-items: center; flex-wrap: wrap;
+    opacity: 0; animation: fadeUp 0.7s 0.65s forwards;
+  }
+
+  .btn-yellow {
+    display: inline-block; background: var(--yellow); color: var(--black);
+    padding: 18px 48px; font-size: 0.95rem; font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none;
+    clip-path: polygon(10px 0%, 100% 0%, calc(100% - 10px) 100%, 0% 100%);
+    transition: all 0.3s;
+  }
+
+  .btn-yellow:hover { background: var(--yellow-dark); transform: translateY(-3px); box-shadow: 0 16px 40px rgba(245,196,0,0.3); }
+
+  .btn-play {
+    display: flex; align-items: center; gap: 14px;
+    color: var(--white); text-decoration: none; font-weight: 600;
+    font-size: 0.9rem; letter-spacing: 0.08em; text-transform: uppercase;
+  }
+
+  .play-circle {
+    width: 56px; height: 56px; border-radius: 50%;
+    background: rgba(255,255,255,0.1); border: 1.5px solid rgba(255,255,255,0.3);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem; transition: all 0.3s; padding-left: 3px;
+  }
+
+  .btn-play:hover .play-circle { background: var(--yellow); border-color: var(--yellow); }
+
+  .hero-numbers {
+    position: absolute; right: 64px; bottom: 80px; z-index: 3;
+    display: flex; flex-direction: column; gap: 2px;
+    opacity: 0; animation: fadeUp 0.7s 0.8s forwards;
+  }
+
+  .hero-num-item {
+    background: rgba(255,255,255,0.05); backdrop-filter: blur(8px);
+    border: 1px solid var(--border); padding: 18px 28px;
+    border-left: 3px solid var(--yellow);
+  }
+
+  .hero-num-item .big {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.4rem; letter-spacing: 0.05em;
+    color: var(--yellow); line-height: 1;
+  }
+
+  .hero-num-item .small {
+    font-size: 0.75rem; color: var(--gray);
+    text-transform: uppercase; letter-spacing: 0.12em; margin-top: 4px;
+  }
+
+  /* MODALIDADES */
+  .modalidades {
+    padding: 100px 64px;
+    background: var(--dark);
+  }
+
+  .mod-header { margin-bottom: 64px; }
+
+  .overline {
+    font-size: 0.75rem; font-weight: 600; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--yellow); margin-bottom: 12px;
+  }
+
+  .big-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.5rem, 5vw, 5rem); letter-spacing: 0.04em;
+    line-height: 0.95;
+  }
+
+  .mod-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 2px; background: var(--black);
+  }
+
+  .mod-card {
+    background: var(--card-bg); overflow: hidden; position: relative;
+    cursor: pointer; transition: flex 0.5s;
+  }
+
+  .mod-img {
+    height: 300px; overflow: hidden; position: relative;
+  }
+
+  .mod-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s, filter 0.4s; filter: grayscale(40%) brightness(0.7); }
+  .mod-card:hover .mod-img img { transform: scale(1.08); filter: grayscale(0%) brightness(0.9); }
+
+  .mod-overlay {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    background: linear-gradient(to top, rgba(10,10,10,0.9), transparent);
+    padding: 28px 24px 20px;
+  }
+
+  .mod-label {
+    font-size: 0.7rem; font-weight: 700; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--yellow); margin-bottom: 6px;
+  }
+
+  .mod-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem; letter-spacing: 0.05em; line-height: 1;
+  }
+
+  .mod-body { padding: 24px; }
+  .mod-body p { font-size: 0.88rem; color: var(--gray); line-height: 1.7; }
+  .mod-body .mod-link { color: var(--yellow); font-weight: 600; font-size: 0.82rem; letter-spacing: 0.1em; text-transform: uppercase; margin-top: 16px; display: inline-block; text-decoration: none; transition: gap 0.3s; }
+
+  /* SOBRE */
+  .sobre {
+    display: grid; grid-template-columns: 1fr 1fr;
+    min-height: 600px;
+  }
+
+  .sobre-visual { position: relative; overflow: hidden; }
+  .sobre-visual img { width: 100%; height: 100%; object-fit: cover; filter: saturate(0.8); }
+  .sobre-visual::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(to right, transparent, var(--dark) 80%);
+  }
+
+  .sobre-content {
+    background: var(--dark);
+    padding: 80px 64px;
+    display: flex; flex-direction: column; justify-content: center;
+  }
+
+  .sobre-content .overline { margin-bottom: 16px; }
+  .sobre-content .big-title { margin-bottom: 24px; }
+
+  .sobre-text {
+    font-size: 1rem; line-height: 1.85; color: var(--gray);
+    font-weight: 300; margin-bottom: 40px;
+  }
+
+  .features {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .feature-item {
+    padding: 20px; background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border); border-left: 3px solid var(--yellow);
+    transition: background 0.3s;
+  }
+
+  .feature-item:hover { background: rgba(245,196,0,0.06); }
+
+  .feature-item h4 { font-size: 0.88rem; font-weight: 600; color: var(--white); margin-bottom: 6px; }
+  .feature-item p { font-size: 0.8rem; color: var(--gray); }
+
+  /* PLANOS */
+  .planos {
+    padding: 100px 64px;
+    background: var(--black);
+  }
+
+  .planos-header { text-align: center; max-width: 560px; margin: 0 auto 64px; }
+  .planos-header .overline { text-align: center; display: block; }
+
+  .planos-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 2px; max-width: 1000px; margin: 0 auto;
+  }
+
+  .plano-card {
+    background: var(--card-bg); padding: 48px 36px;
+    border: 1px solid var(--border);
+    position: relative; transition: transform 0.3s, box-shadow 0.3s;
+  }
+
+  .plano-card.destaque {
+    background: var(--yellow); border-color: var(--yellow);
+    transform: scale(1.04);
+  }
+
+  .plano-card:not(.destaque):hover { transform: translateY(-6px); box-shadow: 0 32px 64px rgba(0,0,0,0.4); }
+
+  .destaque-badge {
+    position: absolute; top: -14px; left: 50%; transform: translateX(-50%);
+    background: var(--red); color: var(--white);
+    font-size: 0.7rem; font-weight: 700; letter-spacing: 0.15em;
+    text-transform: uppercase; padding: 6px 18px;
+  }
+
+  .plano-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.6rem; letter-spacing: 0.08em;
+    margin-bottom: 8px;
+  }
+
+  .plano-card.destaque .plano-name { color: var(--black); }
+
+  .plano-price {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 3.5rem; letter-spacing: 0.02em; line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .plano-card.destaque .plano-price { color: var(--black); }
+
+  .plano-period { font-size: 0.8rem; color: var(--gray); margin-bottom: 32px; }
+  .plano-card.destaque .plano-period { color: rgba(0,0,0,0.5); }
+
+  .plano-lista { list-style: none; margin-bottom: 36px; }
+  .plano-lista li { padding: 10px 0; border-bottom: 1px solid var(--border); font-size: 0.88rem; color: var(--gray-light); display: flex; align-items: center; gap: 10px; }
+  .plano-card.destaque .plano-lista li { border-color: rgba(0,0,0,0.1); color: rgba(0,0,0,0.7); }
+  .plano-lista li::before { content: '✓'; color: var(--yellow); font-weight: 700; font-size: 0.9rem; }
+  .plano-card.destaque .plano-lista li::before { color: var(--black); }
+
+  .btn-plano {
+    display: block; text-align: center; padding: 14px;
+    text-decoration: none; font-weight: 700; font-size: 0.88rem;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    transition: all 0.3s;
+    clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+  }
+
+  .btn-plano-outline { background: transparent; color: var(--yellow); border: 1.5px solid var(--yellow); }
+  .btn-plano-outline:hover { background: var(--yellow); color: var(--black); }
+  .btn-plano-dark { background: var(--black); color: var(--yellow); }
+  .btn-plano-dark:hover { background: var(--dark); }
+
+  /* DEPOIMENTOS */
+  .depoimentos {
+    padding: 100px 64px;
+    background: var(--dark);
+  }
+
+  .dep-header { max-width: 500px; margin-bottom: 60px; }
+
+  .dep-scroll {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+
+  .dep-item {
+    background: var(--card-bg); padding: 36px;
+    border: 1px solid var(--border);
+    transition: border-color 0.3s, transform 0.3s;
+  }
+
+  .dep-item:hover { border-color: var(--yellow); transform: translateY(-4px); }
+
+  .dep-quote { font-size: 2rem; color: var(--yellow); line-height: 1; margin-bottom: 16px; font-family: 'Bebas Neue', sans-serif; }
+  .dep-text { font-size: 0.9rem; color: var(--gray); line-height: 1.75; margin-bottom: 28px; }
+  .dep-name { font-weight: 600; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.08em; }
+  .dep-meta { font-size: 0.75rem; color: var(--gray); margin-top: 4px; }
+  .dep-stars { color: var(--yellow); font-size: 0.85rem; margin-bottom: 16px; }
+
+  /* CTA */
+  .cta {
+    position: relative; min-height: 500px;
+    display: flex; align-items: center; justify-content: center;
+    text-align: center; overflow: hidden;
+  }
+
+  .cta-bg { position: absolute; inset: 0; }
+  .cta-bg img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.2) saturate(0.5); }
+  .cta-bg::after { content: ''; position: absolute; inset: 0; background: rgba(245,196,0,0.08); }
+
+  .cta-content { position: relative; z-index: 2; padding: 60px 32px; }
+  .cta-content .overline { display: block; text-align: center; margin-bottom: 16px; }
+  .cta-content .big-title { font-size: clamp(3rem, 7vw, 7rem); margin-bottom: 16px; }
+  .cta-content p { color: var(--gray); font-size: 1.05rem; margin-bottom: 48px; font-weight: 300; }
+  .cta-btns { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+  .btn-wpp {
+    display: inline-flex; align-items: center; gap: 12px;
+    background: #25D366; color: var(--white); padding: 18px 40px;
+    font-size: 0.95rem; font-weight: 700; letter-spacing: 0.08em;
+    text-transform: uppercase; text-decoration: none;
+    clip-path: polygon(10px 0%, 100% 0%, calc(100% - 10px) 100%, 0% 100%);
+    transition: all 0.3s;
+  }
+
+  .btn-wpp:hover { background: #128C7E; transform: translateY(-3px); box-shadow: 0 16px 40px rgba(37,211,102,0.3); }
+
+  /* FOOTER */
+  footer {
+    background: var(--black); padding: 60px 64px 28px;
+    border-top: 1px solid var(--border);
+  }
+
+  .footer-grid {
+    display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr;
+    gap: 48px; margin-bottom: 48px; padding-bottom: 48px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .footer-brand-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem; letter-spacing: 0.08em; margin-bottom: 16px;
+  }
+
+  .footer-brand-logo span { color: var(--yellow); }
+  .footer-brand-desc { font-size: 0.85rem; color: var(--gray); line-height: 1.7; }
+
+  .footer-col h4 { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gray); margin-bottom: 20px; }
+  .footer-col ul { list-style: none; }
+  .footer-col li { margin-bottom: 10px; }
+  .footer-col a { color: rgba(255,255,255,0.5); text-decoration: none; font-size: 0.88rem; transition: color 0.3s; }
+  .footer-col a:hover { color: var(--yellow); }
+
+  .footer-bottom { display: flex; justify-content: space-between; align-items: center; }
+  .footer-bottom p { font-size: 0.8rem; color: rgba(255,255,255,0.2); }
+
+  /* ANIM */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(32px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.8s ease, transform 0.8s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+  .hamburger span { display: block; width: 24px; height: 2px; background: var(--white); }
+
+  @media (max-width: 1100px) {
+    .planos-grid { grid-template-columns: 1fr; max-width: 420px; }
+    .plano-card.destaque { transform: none; }
+    .mod-grid { grid-template-columns: 1fr; }
+    .dep-scroll { grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 900px) {
+    nav { padding: 0 24px; }
+    .nav-links { display: none; }
+    .hamburger { display: flex; }
+
+    .hero-content { padding: 48px 24px; }
+    .hero-numbers { display: none; }
+
+    .modalidades { padding: 64px 24px; }
+    .sobre { grid-template-columns: 1fr; }
+    .sobre-visual { min-height: 280px; }
+    .sobre-content { padding: 48px 24px; }
+    .features { grid-template-columns: 1fr; }
+
+    .planos { padding: 64px 24px; }
+    .depoimentos { padding: 64px 24px; }
+
+    footer { padding: 48px 24px 24px; }
+    .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
+    .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">Élite<span>Fit</span></div>
+  <ul class="nav-links">
+    <li><a href="#modalidades">Modalidades</a></li>
+    <li><a href="#planos">Planos</a></li>
+    <li><a href="#sobre">Sobre</a></li>
+    <li><a href="#cta" class="nav-cta">Começar agora</a></li>
+  </ul>
+  <div class="hamburger"><span></span><span></span><span></span></div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg">
+    <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=1400&auto=format&fit=crop&q=80" alt="Academia">
+  </div>
+  <div class="hero-content">
+    <div class="hero-tag">Academia Premium · Serra do Ouro, MG</div>
+    <h1 class="hero-title">
+      <div>SUPERE</div>
+      <div class="outline">SEUS</div>
+      <div class="line2">LIMITES</div>
+    </h1>
+    <p class="hero-sub">Equipamentos de alto nível, professores especializados e um ambiente que vai te fazer querer voltar todos os dias.</p>
+    <div class="hero-actions">
+      <a href="#planos" class="btn-yellow">Ver planos</a>
+      <a href="https://wa.me/5500000000000" class="btn-play">
+        <div class="play-circle">▶</div>
+        Agendar visita
+      </a>
+    </div>
+  </div>
+  <div class="hero-numbers">
+    <div class="hero-num-item">
+      <div class="big">500+</div>
+      <div class="small">Alunos ativos</div>
+    </div>
+    <div class="hero-num-item">
+      <div class="big">24h</div>
+      <div class="small">Funcionamento</div>
+    </div>
+    <div class="hero-num-item">
+      <div class="big">15+</div>
+      <div class="small">Modalidades</div>
+    </div>
+  </div>
+</section>
+
+<!-- MODALIDADES -->
+<section class="modalidades" id="modalidades">
+  <div class="mod-header reveal">
+    <p class="overline">O que oferecemos</p>
+    <h2 class="big-title">MODALIDADES<br>DISPONÍVEIS</h2>
+  </div>
+  <div class="mod-grid">
+    <div class="mod-card reveal">
+      <div class="mod-img">
+        <img src="https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?w=700&auto=format&fit=crop&q=80" alt="Musculação">
+        <div class="mod-overlay">
+          <div class="mod-label">Sala ampla</div>
+          <div class="mod-name">MUSCULAÇÃO</div>
+        </div>
+      </div>
+      <div class="mod-body">
+        <p>Equipamentos importados e mapeamento corporal individualizado. Treinos periodizados por profissionais certificados.</p>
+        <a href="#" class="mod-link">Saiba mais →</a>
+      </div>
+    </div>
+    <div class="mod-card reveal">
+      <div class="mod-img">
+        <img src="https://images.unsplash.com/photo-1571902943202-507ec2618e8f?w=700&auto=format&fit=crop&q=80" alt="CrossFit">
+        <div class="mod-overlay">
+          <div class="mod-label">Alta intensidade</div>
+          <div class="mod-name">FUNCIONAL</div>
+        </div>
+      </div>
+      <div class="mod-body">
+        <p>Treinos funcionais e de resistência que transformam corpo e mente. Grupos pequenoscom atenção individual.</p>
+        <a href="#" class="mod-link">Saiba mais →</a>
+      </div>
+    </div>
+    <div class="mod-card reveal">
+      <div class="mod-img">
+        <img src="https://images.unsplash.com/photo-1518611012118-696072aa579a?w=700&auto=format&fit=crop&q=80" alt="Yoga">
+        <div class="mod-overlay">
+          <div class="mod-label">Equilíbrio</div>
+          <div class="mod-name">YOGA & PILATES</div>
+        </div>
+      </div>
+      <div class="mod-body">
+        <p>Conexão de corpo e mente. Melhora de postura, flexibilidade e redução do estresse com instrutoras certificadas.</p>
+        <a href="#" class="mod-link">Saiba mais →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOBRE -->
+<section class="sobre" id="sobre">
+  <div class="sobre-visual reveal">
+    <img src="https://images.unsplash.com/photo-1593079831268-3381b0db4a77?w=800&auto=format&fit=crop&q=80" alt="Élite Fit">
+  </div>
+  <div class="sobre-content reveal">
+    <p class="overline">Nossa história</p>
+    <h2 class="big-title">MAIS QUE<br>UMA ACADEMIA</h2>
+    <p class="sobre-text">Fundada em 2015 em Serra do Ouro, a Élite Fit nasceu com a missão de democratizar o acesso à atividade física de qualidade. Com mais de 500 alunos ativos, somos a academia mais completa da cidade — e nossos resultados provam isso.</p>
+    <div class="features">
+      <div class="feature-item">
+        <h4>Aparelhos de última geração</h4>
+        <p>Equipamentos importados e revisados mensalmente</p>
+      </div>
+      <div class="feature-item">
+        <h4>Professores especializados</h4>
+        <p>Todos com CREF ativo e formação continuada</p>
+      </div>
+      <div class="feature-item">
+        <h4>Avaliação física gratuita</h4>
+        <p>Toda a progressão acompanhada com dados reais</p>
+      </div>
+      <div class="feature-item">
+        <h4>Abertos 24 horas</h4>
+        <p>Treine no seu horário, sem desculpas</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PLANOS -->
+<section class="planos" id="planos">
+  <div class="planos-header reveal">
+    <span class="overline">Investimento</span>
+    <h2 class="big-title">ESCOLHA<br>SEU PLANO</h2>
+  </div>
+  <div class="planos-grid">
+    <div class="plano-card reveal">
+      <div class="plano-name">BÁSICO</div>
+      <div class="plano-price">R$89</div>
+      <div class="plano-period">/mês · sem fidelidade</div>
+      <ul class="plano-lista">
+        <li>Musculação ilimitada</li>
+        <li>Acesso 06h–22h</li>
+        <li>Avaliação física mensal</li>
+        <li>Vestiários completos</li>
+      </ul>
+      <a href="https://wa.me/5500000000000" class="btn-plano btn-plano-outline">Escolher plano</a>
+    </div>
+    <div class="plano-card destaque reveal">
+      <div class="destaque-badge">MAIS POPULAR</div>
+      <div class="plano-name" style="color:var(--black)">PREMIUM</div>
+      <div class="plano-price" style="color:var(--black)">R$149</div>
+      <div class="plano-period">/ mês · 3 meses</div>
+      <ul class="plano-lista">
+        <li>Tudo do básico</li>
+        <li>Todas as modalidades</li>
+        <li>Acesso 24 horas</li>
+        <li>Acompanhamento nutricional</li>
+        <li>Personal trainer 2x/semana</li>
+      </ul>
+      <a href="https://wa.me/5500000000000" class="btn-plano btn-plano-dark">Escolher plano</a>
+    </div>
+    <div class="plano-card reveal">
+      <div class="plano-name">ANUAL</div>
+      <div class="plano-price">R$99</div>
+      <div class="plano-period">/mês · 12 meses</div>
+      <ul class="plano-lista">
+        <li>Tudo do básico</li>
+        <li>Todas as modalidades</li>
+        <li>Acesso 24h</li>
+        <li>2 meses grátis</li>
+      </ul>
+      <a href="https://wa.me/5500000000000" class="btn-plano btn-plano-outline">Escolher plano</a>
+    </div>
+  </div>
+</section>
+
+<!-- DEPOIMENTOS -->
+<section class="depoimentos" id="depoimentos">
+  <div class="dep-header reveal">
+    <p class="overline">Resultados reais</p>
+    <h2 class="big-title">QUEM<br>TREINA AQUI<br>EVOLUI</h2>
+  </div>
+  <div class="dep-scroll">
+    <div class="dep-item reveal">
+      <div class="dep-quote">"</div>
+      <p class="dep-text">Entrei pesando 108kg e saí com 83kg em 8 meses. Nunca pensei que conseguiria, mas o acompanhamento dos professores da Élite Fit fez toda a diferença.</p>
+      <div class="dep-stars">★★★★★</div>
+      <div class="dep-name">Jefferson Moraes</div>
+      <div class="dep-meta">Aluno há 2 anos · Perda de 25kg</div>
+    </div>
+    <div class="dep-item reveal">
+      <div class="dep-quote">"</div>
+      <p class="dep-text">Ambiente limpo, equipamentos novos e professores que realmente se importam com seu progresso. Melhor academia que já frequentei.</p>
+      <div class="dep-stars">★★★★★</div>
+      <div class="dep-name">Renata Borges</div>
+      <div class="dep-meta">Aluna há 1 ano · Modalidade: Yoga + Musculação</div>
+    </div>
+    <div class="dep-item reveal">
+      <div class="dep-quote">"</div>
+      <p class="dep-text">O personal trainer da Élite montou um treino que nunca tinha feito antes. Em 3 meses bati meus melhores recordes pessoais. É outra realidade!</p>
+      <div class="dep-stars">★★★★★</div>
+      <div class="dep-name">Augusto Neto</div>
+      <div class="dep-meta">Aluno há 6 meses · Modalidade: Funcional + Musculação</div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta" id="cta">
+  <div class="cta-bg"><img src="https://images.unsplash.com/photo-1526506118085-60ce8714f8c5?w=1400&auto=format&fit=crop&q=80" alt="CTA"></div>
+  <div class="cta-content">
+    <span class="overline">Primeiro passo</span>
+    <h2 class="big-title reveal">COMECE<br>HOJE MESMO</h2>
+    <p class="reveal">Fale com a gente agora e ganhe 7 dias de teste grátis. Sem compromisso, sem burocracia.</p>
+    <div class="cta-btns reveal">
+      <a href="https://wa.me/5500000000000?text=Oi!%20Quero%20conhecer%20a%20Élite%20Fit%20e%20aproveitar%20os%20dias%20gratuitos." class="btn-wpp">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.488"/></svg>
+        WhatsApp
+      </a>
+      <a href="tel:0000000000" class="btn-yellow">Ligar agora</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="footer-brand-logo">Élite<span>Fit</span></div>
+      <p class="footer-brand-desc">A academia mais completa de Serra do Ouro. Equipamentos premium, professores especializados e atendimento 24h.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Modalidades</h4>
+      <ul>
+        <li><a href="#">Musculação</a></li>
+        <li><a href="#">Funcional</a></li>
+        <li><a href="#">Yoga & Pilates</a></li>
+        <li><a href="#">Spinning</a></li>
+        <li><a href="#">Natação</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Planos</h4>
+      <ul>
+        <li><a href="#">Básico</a></li>
+        <li><a href="#">Premium</a></li>
+        <li><a href="#">Anual</a></li>
+        <li><a href="#">Corporativo</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contato</h4>
+      <ul>
+        <li><a href="#">(00) 9 9000-0000</a></li>
+        <li><a href="#">elitefit@email.com</a></li>
+        <li><a href="#">Av. dos Atletas, 850</a></li>
+        <li><a href="#">Serra do Ouro – MG</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2024 Élite Fit Academia. Todos os direitos reservados.</p>
+    <p style="color:rgba(255,255,255,0.15)">CREF 000000-G/MG</p>
+  </div>
+</footer>
+
+<script>
+  const revealEls = document.querySelectorAll('.reveal');
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (!e.isIntersecting) return;
+      e.target.classList.add('visible');
+      obs.unobserve(e.target);
+    });
+  }, { threshold: 0.1 });
+  revealEls.forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
